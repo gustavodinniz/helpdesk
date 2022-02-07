@@ -2,21 +2,41 @@ package br.com.gustavodiniz.helpdesk.domain;
 
 import br.com.gustavodiniz.helpdesk.domain.enums.Priority;
 import br.com.gustavodiniz.helpdesk.domain.enums.Status;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Called {
+@Entity
+@Table(name = "tb_called")
+public class Called implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate openingDate = LocalDate.now();
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate closingDate;
+
     private Priority priority;
+
     private Status status;
+
     private String title;
+
     private String comments;
 
+    @ManyToOne
+    @JoinColumn(name = "technician_id")
     private Technician technician;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
 
     public Called() {
