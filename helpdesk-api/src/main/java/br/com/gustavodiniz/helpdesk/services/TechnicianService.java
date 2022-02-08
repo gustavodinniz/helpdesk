@@ -38,17 +38,25 @@ public class TechnicianService {
         return repository.save(entity);
     }
 
+    public Technician update(TechnicianDTO technicianDTO, Integer id) {
+        technicianDTO.setId(id);
+        Technician entity = findById(id);
+        validationByCpfAndEmail(technicianDTO);
+        entity = new Technician(technicianDTO);
+        return repository.save(entity);
+    }
+
     private void validationByCpfAndEmail(TechnicianDTO technicianDTO) {
 
         Optional<Person> entity = personRepository.findByCpf(technicianDTO.getCpf());
 
-        if(entity.isPresent() && entity.get().getId() != technicianDTO.getId()){
-            throw  new DataIntegrityViolationException("CPF already registered in the system");
+        if (entity.isPresent() && entity.get().getId() != technicianDTO.getId()) {
+            throw new DataIntegrityViolationException("CPF already registered in the system");
         }
 
         entity = personRepository.findByEmail(technicianDTO.getEmail());
-        if(entity.isPresent() && entity.get().getId() != technicianDTO.getId()){
-            throw  new DataIntegrityViolationException("Email already registered in the system");
+        if (entity.isPresent() && entity.get().getId() != technicianDTO.getId()) {
+            throw new DataIntegrityViolationException("Email already registered in the system");
         }
 
     }

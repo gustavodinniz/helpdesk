@@ -2,6 +2,7 @@ package br.com.gustavodiniz.helpdesk.domain;
 
 import br.com.gustavodiniz.helpdesk.domain.enums.Profile;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -22,6 +23,7 @@ public abstract class Person implements Serializable {
 
     protected String name;
 
+    @CPF
     @Column(unique = true)
     protected String cpf;
 
