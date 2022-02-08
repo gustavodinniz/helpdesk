@@ -22,6 +22,7 @@ public class TechnicianDTO {
     protected LocalDate createdAt = LocalDate.now();
 
     public TechnicianDTO() {
+        addProfiles(Profile.CLIENT);
     }
 
     public TechnicianDTO(Technician entity) {
@@ -32,6 +33,7 @@ public class TechnicianDTO {
         this.password = entity.getPassword();
         this.profiles = entity.getProfiles().stream().map(Profile::getCode).collect(Collectors.toSet());
         this.createdAt = entity.getCreatedAt();
+        addProfiles(Profile.CLIENT);
     }
 
     public Integer getId() {

@@ -1,6 +1,7 @@
 package br.com.gustavodiniz.helpdesk.services;
 
 import br.com.gustavodiniz.helpdesk.domain.Technician;
+import br.com.gustavodiniz.helpdesk.domain.dto.TechnicianDTO;
 import br.com.gustavodiniz.helpdesk.repositories.TechnicianRepository;
 import br.com.gustavodiniz.helpdesk.services.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,12 @@ public class TechnicianService {
     }
 
     public List<Technician> findAll() {
-         return repository.findAll();
+        return repository.findAll();
+    }
+
+    public Technician create(TechnicianDTO technicianDTO) {
+        technicianDTO.setId(null);
+        Technician entity = new Technician(technicianDTO);
+        return repository.save(entity);
     }
 }

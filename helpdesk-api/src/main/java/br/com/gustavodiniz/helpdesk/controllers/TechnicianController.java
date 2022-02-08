@@ -5,11 +5,10 @@ import br.com.gustavodiniz.helpdesk.domain.dto.TechnicianDTO;
 import br.com.gustavodiniz.helpdesk.services.TechnicianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,5 +30,12 @@ public class TechnicianController {
         List<Technician> list = service.findAll();
         List<TechnicianDTO> listDTO = list.stream().map(TechnicianDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
+    }
+
+    @PostMapping
+    public ResponseEntity<TechnicianDTO> create(@RequestBody TechnicianDTO technicianDTO) {
+        Technician entity = service.create(technicianDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entity.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 }
