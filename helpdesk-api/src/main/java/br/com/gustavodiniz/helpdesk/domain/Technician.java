@@ -1,6 +1,7 @@
 package br.com.gustavodiniz.helpdesk.domain;
 
 import br.com.gustavodiniz.helpdesk.domain.enums.Profile;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -12,6 +13,7 @@ import java.util.List;
 @Table(name = "tb_technician")
 public class Technician extends Person {
 
+    @JsonIgnore
     @OneToMany(mappedBy = "technician")
     private List<Called> calleds = new ArrayList<>();
 
