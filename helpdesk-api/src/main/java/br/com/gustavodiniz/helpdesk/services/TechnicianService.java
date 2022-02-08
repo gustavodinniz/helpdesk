@@ -60,4 +60,12 @@ public class TechnicianService {
         }
 
     }
+
+    public void delete(Integer id) {
+        Technician entity = findById(id);
+        if (entity.getCalleds().size() > 0) {
+            throw new DataIntegrityViolationException("The technician has work orders and cannot be deleted");
+        }
+        repository.deleteById(id);
+    }
 }

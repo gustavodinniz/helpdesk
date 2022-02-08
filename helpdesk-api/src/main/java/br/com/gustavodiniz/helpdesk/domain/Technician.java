@@ -38,4 +38,12 @@ public class Technician extends Person {
         this.profiles = dto.getProfiles().stream().map(Profile::getCode).collect(Collectors.toSet());
         this.createdAt = dto.getCreatedAt();
     }
+
+    public List<Called> getCalleds() {
+        return calleds;
+    }
+
+    public void setCalleds(List<Called> calleds) {
+        this.calleds = calleds;
+    }
 }
