@@ -4,6 +4,7 @@ import br.com.gustavodiniz.helpdesk.domain.Technician;
 import br.com.gustavodiniz.helpdesk.domain.enums.Profile;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,10 +13,19 @@ import java.util.stream.Collectors;
 public class TechnicianDTO {
 
     protected Integer id;
+
+    @NotNull(message = "Required field")
     protected String name;
+
+    @NotNull(message = "Required field")
     protected String cpf;
+
+    @NotNull(message = "Required field")
     protected String email;
+
+    @NotNull(message = "Required field")
     protected String password;
+
     protected Set<Integer> profiles = new HashSet<>();
 
     @JsonFormat(pattern = "dd/MM/yyyy")
