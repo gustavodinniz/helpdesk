@@ -1,6 +1,7 @@
 package br.com.gustavodiniz.helpdesk.controllers;
 
 import br.com.gustavodiniz.helpdesk.domain.Technician;
+import br.com.gustavodiniz.helpdesk.domain.dto.TechnicianDTO;
 import br.com.gustavodiniz.helpdesk.services.TechnicianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,8 @@ public class TechnicianController {
     private TechnicianService service;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Technician> findById(@PathVariable Integer id) {
+    public ResponseEntity<TechnicianDTO> findById(@PathVariable Integer id) {
         Technician technician = service.findById(id);
-        return ResponseEntity.ok().body(technician);
+        return ResponseEntity.ok().body(new TechnicianDTO(technician));
     }
 }
