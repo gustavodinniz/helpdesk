@@ -47,9 +47,9 @@ public class DBService {
 
         Called called1 = new Called(null, Priority.MEDIUM, Status.IN_PROGRESS, "Chamado 01", "Primeiro Chamado", technician1, client1);
         Called called2 = new Called(null, Priority.LOW, Status.OPEN, "Chamado 02", "Segundo Chamado", technician2, client2);
-        Called called3 = new Called(null, Priority.MEDIUM, Status.IN_PROGRESS, "Chamado 01", "Primeiro Chamado", technician4, client4);
-        Called called4 = new Called(null, Priority.HIGH, Status.CLOSED, "Chamado 01", "Primeiro Chamado", technician3, client7);
-        Called called5 = new Called(null, Priority.LOW, Status.CLOSED, "Chamado 01", "Primeiro Chamado", technician5, client10);
+        Called called3 = new Called(null, Priority.MEDIUM, Status.IN_PROGRESS, "Chamado 03", "Terceiro Chamado", technician4, client4);
+        Called called4 = new Called(null, Priority.HIGH, Status.CLOSED, "Chamado 04", "Quarto Chamado", technician3, client7);
+        Called called5 = new Called(null, Priority.LOW, Status.CLOSED, "Chamado 05", "Quinto Chamado", technician5, client10);
 
         technicianRepository.saveAll(Arrays.asList(technician1, technician2, technician3, technician4, technician5));
         clientRepository.saveAll(Arrays.asList(client1, client2, client3, client4, client5, client6, client7, client8, client9, client10));
