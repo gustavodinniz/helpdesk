@@ -39,4 +39,10 @@ public class CalledController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entity.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<CalledDTO> update(@PathVariable Integer id, @Valid @RequestBody CalledDTO dto) {
+        Called entity = service.update(id, dto);
+        return ResponseEntity.ok().body(new CalledDTO(entity));
+    }
 }

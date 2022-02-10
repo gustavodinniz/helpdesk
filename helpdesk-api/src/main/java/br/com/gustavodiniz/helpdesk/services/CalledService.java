@@ -11,6 +11,7 @@ import br.com.gustavodiniz.helpdesk.services.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,16 +37,28 @@ public class CalledService {
     }
 
     public Called create(CalledDTO dto) {
-        return repository.save(newCalled(dto));
+        return repository.save(createOrUpdate(dto));
     }
 
-    private Called newCalled(CalledDTO calledDTO) {
+    public Called update(Integer id, CalledDTO dto) {
+        dto.setId(id);
+        Called entity = findById(id);
+        entity = createOrUpdate(dto);
+        return repository.save(entity);
+    }
+
+    private Called createOrUpdate(CalledDTO calledDTO) {
         Technician technician = technicianService.findById(calledDTO.getTechnician());
         Client client = clientService.findById(calledDTO.getClient());
 
         Called called = new Called();
+
         if (calledDTO.getId() != null) {
             called.setId(calledDTO.getId());
+        }
+
+        if (calledDTO.getStatus().equals(2)) {
+            called.setClosingDate(LocalDate.now());
         }
 
         called.setTechnician(technician);
@@ -57,4 +70,6 @@ public class CalledService {
 
         return called;
     }
+
+
 }
