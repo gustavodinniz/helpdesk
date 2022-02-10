@@ -3,6 +3,7 @@ package br.com.gustavodiniz.helpdesk.domain.dto;
 import br.com.gustavodiniz.helpdesk.domain.Called;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -16,13 +17,26 @@ public class CalledDTO implements Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate closingDate;
 
+    @NotNull(message = "Field required")
     private Integer priority;
+
+    @NotNull(message = "Field required")
     private Integer status;
+
+    @NotNull(message = "Field required")
     private String title;
+
+    @NotNull(message = "Field required")
     private String comments;
+
+    @NotNull(message = "Field required")
     private Integer technician;
+
+    @NotNull(message = "Field required")
     private Integer client;
+
     private String nameTechnician;
+
     private String nameClient;
 
     public CalledDTO() {
