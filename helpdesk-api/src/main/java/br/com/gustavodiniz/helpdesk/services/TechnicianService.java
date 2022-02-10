@@ -8,6 +8,7 @@ import br.com.gustavodiniz.helpdesk.repositories.TechnicianRepository;
 import br.com.gustavodiniz.helpdesk.services.exceptions.DataIntegrityViolationException;
 import br.com.gustavodiniz.helpdesk.services.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,9 @@ public class TechnicianService {
     @Autowired
     private PersonRepository personRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     public Technician findById(Integer id) {
         Optional<Technician> technician = repository.findById(id);
         return technician.orElseThrow(() -> new EntityNotFoundException("Technician with id " + id + " not found"));
@@ -33,6 +37,7 @@ public class TechnicianService {
 
     public Technician create(TechnicianDTO technicianDTO) {
         technicianDTO.setId(null);
+        technicianDTO.setPassword(passwordEncoder.encode(technicianDTO.getPassword()));
         validationByCpfAndEmail(technicianDTO);
         Technician entity = new Technician(technicianDTO);
         return repository.save(entity);

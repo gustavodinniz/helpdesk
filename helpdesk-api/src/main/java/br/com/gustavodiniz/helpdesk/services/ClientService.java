@@ -1,13 +1,14 @@
 package br.com.gustavodiniz.helpdesk.services;
 
-import br.com.gustavodiniz.helpdesk.domain.Person;
 import br.com.gustavodiniz.helpdesk.domain.Client;
+import br.com.gustavodiniz.helpdesk.domain.Person;
 import br.com.gustavodiniz.helpdesk.domain.dto.ClientDTO;
-import br.com.gustavodiniz.helpdesk.repositories.PersonRepository;
 import br.com.gustavodiniz.helpdesk.repositories.ClientRepository;
+import br.com.gustavodiniz.helpdesk.repositories.PersonRepository;
 import br.com.gustavodiniz.helpdesk.services.exceptions.DataIntegrityViolationException;
 import br.com.gustavodiniz.helpdesk.services.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,9 @@ public class ClientService {
     @Autowired
     private PersonRepository personRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     public Client findById(Integer id) {
         Optional<Client> client = repository.findById(id);
         return client.orElseThrow(() -> new EntityNotFoundException("Client with id " + id + " not found"));
@@ -33,6 +37,7 @@ public class ClientService {
 
     public Client create(ClientDTO clientDTO) {
         clientDTO.setId(null);
+        clientDTO.setPassword(passwordEncoder.encode(clientDTO.getPassword()));
         validationByCpfAndEmail(clientDTO);
         Client entity = new Client(clientDTO);
         return repository.save(entity);
